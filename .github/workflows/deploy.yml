@@ -28,7 +28,7 @@ jobs:
       - run: npm run build && npm run export
 
       - name: Upload static site
-        uses: actions/upload-pages-artifact@v2
+        uses: actions/upload-pages-artifact@v3
         with:
           path: ./out
           name: github-pages # ✅ required
