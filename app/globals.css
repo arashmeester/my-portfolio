@@ -2,10 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-/* @import "tailwindcss";
-
-@custom-variant dark (&:where(.dark, .dark *)); */
-
 /* Smooth transitions for dark mode */
 html {
   @apply transition-colors duration-300;
