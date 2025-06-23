@@ -6,7 +6,11 @@ const nextConfig: NextConfig = {
     images: {
         unoptimized: true,
     },
-    trailingSlash: true
+    trailingSlash: true,
+    poweredByHeader: false,
+    experimental: {
+        optimizeCss: false,
+    },
 };
 
 export default nextConfig;
