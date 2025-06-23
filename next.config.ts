@@ -1,15 +1,8 @@
-import type { NextConfig } from "next";
-
-const nextConfig: NextConfig = {
+const nextConfig = {
     output: 'export',
-    distDir: 'out',
+    trailingSlash: true,
     images: {
         unoptimized: true,
-    },
-    trailingSlash: true,
-    poweredByHeader: false,
-    experimental: {
-        optimizeCss: false,
     },
 };
 
