@@ -32,8 +32,9 @@ jobs:
       - name: Build Next.js app
         run: npm run build
 
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v2 # ✅ CORRECT LATEST VERSION
+      - name: Upload static site to GitHub Pages artifact
+        uses: actions/upload-pages-artifact@v2 # ✅ latest
+
         with:
           path: ./out
 
