@@ -9,29 +9,38 @@ permissions:
   pages: write
   id-token: write
 
+concurrency:
+  group: 'pages'
+  cancel-in-progress: true
+
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: 18
+
       - run: npm ci
-      - run: npm run build
-      - uses: actions/upload-artifact@v4
+      - run: npm run build && npm run export
+
+      - name: Upload static site
+        uses: actions/upload-pages-artifact@v2
         with:
           path: ./out
-          name: github-pages
+          name: github-pages # ✅ required
 
   deploy:
-    needs: build
+    needs: build # ✅ ensure the deploy job waits for the build job
     runs-on: ubuntu-latest
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
 
     steps:
-      - uses: actions/deploy-pages@v2
+      - name: Deploy to GitHub Pages
         id: deployment
+        uses: actions/deploy-pages@v2
