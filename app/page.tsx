@@ -3,25 +3,27 @@
 import React, { useState, useEffect, useRef, createContext } from "react";
 import { ParallaxProvider } from "react-scroll-parallax";
 import { ChevronDown } from "lucide-react";
+import { useScrollTo } from "@/hooks/useScrollTo";
+import { useScrollContext } from "@/contexts/ScrollContext";
 import UserProfile from "@/components/UserProfile";
 import AboutMe from "@/components/AboutMe";
 import Skills from "@/components/Skills";
 import Navbar from "@/components/Navbar";
+import Projects from "@/components/Projects";
+import Experience from "@/components/Experience";
+import Contact from "@/components/Contact";
 
 const App = () => {
   const [activeSection, setActiveSection] = useState("home");
-  const [isScrolled, setIsScrolled] = useState(false);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isLargeScreen, setIsLargeScreen] = useState(true);
   const [showScrollToTop, setShowScrollToTop] = useState(false);
   const sectionRefs = useRef<{ [key: string]: HTMLElement | null }>({});
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-    };
+  const { scrollToSection } = useScrollTo();
+  const { setMobileMenuOpen } = useScrollContext();
 
+  useEffect(() => {
     const checkScrollTop = () => {
       if (window.scrollY > 300) {
         setShowScrollToTop(true);
@@ -36,9 +38,6 @@ const App = () => {
 
     const handleResize = () => {
       setIsLargeScreen(window.innerWidth > 1280);
-      if (window.innerWidth > 768) {
-        setMobileMenuOpen(false);
-      }
     };
 
     // Set up Intersection Observer
@@ -53,7 +52,7 @@ const App = () => {
       {
         root: null,
         rootMargin: "0px",
-        threshold: 0.5,
+        threshold: 0.3,
       }
     );
 
@@ -66,6 +65,7 @@ const App = () => {
       "experience",
       "contact",
     ];
+
     sections.forEach((section) => {
       const element = document.getElementById(section);
       if (element) {
@@ -74,13 +74,11 @@ const App = () => {
       }
     });
 
-    window.addEventListener("scroll", handleScroll);
     window.addEventListener("scroll", checkScrollTop);
     window.addEventListener("mousemove", handleMouseMove);
     window.addEventListener("resize", handleResize);
 
     return () => {
-      window.removeEventListener("scroll", handleScroll);
       window.removeEventListener("scroll", checkScrollTop);
       window.removeEventListener("mousemove", handleMouseMove);
       window.removeEventListener("resize", handleResize);
@@ -93,9 +91,11 @@ const App = () => {
     };
   }, []);
 
-  const scrollToSection = (sectionId: string) => {
-    const element = document.getElementById(sectionId);
-    element?.scrollIntoView({ behavior: "smooth" });
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
     setMobileMenuOpen(false);
   };
 
@@ -114,42 +114,71 @@ const App = () => {
         </div>
 
         {/* Navigation */}
-        <Navbar activeSection={activeSection} onScrollToSection={scrollToSection} />
+        <Navbar activeSection={activeSection} />
 
         {/* Hero Section */}
         <section id="home">
-          <UserProfile
-            isLargeScreen={isLargeScreen}
-            onScrollToSection={scrollToSection}
-          >
-            <button
-              onClick={() => scrollToSection("about")}
-              className="absolute bottom-8 inset-x-0 flex justify-center animate-bounce"
-              aria-label="Scroll down"
-            >
-              <ChevronDown
-                size={32}
-                className="text-gray-400 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400 transition-colors"
-              />
-            </button>
+          <UserProfile isLargeScreen={isLargeScreen}>
+            {isLargeScreen && (
+              <button
+                onClick={() => scrollToSection("about")}
+                className="absolute bottom-8 inset-x-0 flex justify-center animate-bounce"
+                aria-label="Scroll down"
+              >
+                <ChevronDown
+                  size={32}
+                  className="text-gray-400 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400 transition-colors"
+                />
+              </button>
+            )}
           </UserProfile>
         </section>
 
         {/* About Section */}
         <section id="about" className="py-20 bg-white dark:bg-gray-800">
-          <AboutMe
-            isLargeScreen={isLargeScreen}
-            onScrollToSection={scrollToSection}
-          />
+          <AboutMe isLargeScreen={isLargeScreen} />
         </section>
 
         {/* Skills Section */}
         <section id="skills" className="py-20 bg-gray-50 dark:bg-gray-900">
-          <Skills
-            isLargeScreen={isLargeScreen}
-            onScrollToSection={scrollToSection}
-          />
+          <Skills isLargeScreen={isLargeScreen} />
         </section>
+
+        {/* Projects Section */}
+        <section id="projects" className="py-20 bg-white dark:bg-gray-800">
+          <Projects isLargeScreen={isLargeScreen} />
+        </section>
+
+        {/* Experience Section */}
+        <section id="experience" className="py-20 bg-gray-50 dark:bg-gray-900">
+          <Experience isLargeScreen={isLargeScreen} />
+        </section>
+
+        {/* Contact Section */}
+        <section id="contact" className="py-20 bg-white dark:bg-gray-800">
+          <Contact isLargeScreen={isLargeScreen} />
+        </section>
+
+        {/* Footer */}
+        <footer className="bg-gray-800 dark:bg-gray-900 text-white py-8">
+          <div className="container mx-auto px-6 text-center">
+            <p className="text-gray-400">
+              © {new Date().getFullYear()} Arash Shafiq. Built with React,
+              TypeScript, and Tailwind CSS.
+            </p>
+          </div>
+        </footer>
+
+        {/* Scroll to Top Button */}
+        <button
+          onClick={scrollToTop}
+          className={`fixed bottom-8 right-8 p-3 bg-blue-500 text-white rounded-full shadow-lg transition-all duration-300 transform hover:scale-110 z-[100] ${
+            showScrollToTop ? "opacity-100" : "opacity-0 pointer-events-none"
+          }`}
+          aria-label="Scroll to top"
+        >
+          <ChevronDown size={24} className="rotate-180" />
+        </button>
       </div>
     </ParallaxProvider>
   );

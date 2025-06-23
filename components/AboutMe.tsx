@@ -1,15 +1,8 @@
 import Tilt from "react-parallax-tilt";
 import { Parallax } from "react-scroll-parallax";
 import { Phone, Github, Linkedin, Mail, MapPin } from "lucide-react";
-import me from "../assets/me1.jpg";
 
-const AboutMe = ({
-  isLargeScreen,
-  onScrollToSection,
-}: {
-  isLargeScreen: boolean;
-  onScrollToSection: (sectionId: string) => void;
-}) => {
+const AboutMe = ({ isLargeScreen }: { isLargeScreen: boolean }) => {
   return (
     <div className="container mx-auto px-6">
       <div className={`max-w-4xl mx-auto ${isLargeScreen ? "max-w-6xl" : ""}`}>
@@ -23,6 +16,7 @@ const AboutMe = ({
             tiltMaxAngleY={15}
             scale={1.05}
             transitionSpeed={1000}
+            className="-mt-md-20"
           >
             <Parallax speed={10}>
               <div className="flex justify-center">
@@ -39,7 +33,7 @@ const AboutMe = ({
             </Parallax>
           </Tilt>
           <div>
-            <p className="text-lg text-gray-600 dark:text-gray-300 mb-6">
+            <p className="text-md text-gray-600 dark:text-gray-300 mb-6">
               I’m a software engineer who runs on clean code, mocha coffee, and
               last-minute EA FC winners (preferably with Viní Jr. on the wing).
               By day, I’m knee-deep in components, APIs, and mysterious bugs
@@ -49,7 +43,7 @@ const AboutMe = ({
               smooth, and don’t break just because someone double-clicked too
               fast.
             </p>
-            <p className="text-lg text-gray-600 dark:text-gray-300 mb-6">
+            <p className="text-md text-gray-600 dark:text-gray-300 mb-6">
               Big fan of Real Madrid, solid UI, and finding deals that make me
               feel like I’ve hacked the Matrix. I believe good tech doesn’t have
               to be complicated—and that great teamwork can beat great solo
@@ -87,7 +81,7 @@ const AboutMe = ({
 
             <div className="flex gap-4">
               <a
-                href="https://www.linkedin.com/in/arash-shafiq-656988167/"
+                href="https://www.linkedin.com/in/arash-shafiq-656988167"
                 className="p-3 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition-colors dark:bg-blue-700 dark:hover:bg-blue-600"
               >
                 <Linkedin size={20} />

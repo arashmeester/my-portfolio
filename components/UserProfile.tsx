@@ -1,7 +1,16 @@
 import React, { useState, useEffect } from "react";
 import Typewriter from "typewriter-effect";
+import { useScrollTo } from "@/hooks/useScrollTo";
 
-const UserProfile = ({ children, isLargeScreen, onScrollToSection }: { children: React.ReactNode, isLargeScreen: boolean, onScrollToSection: (sectionId: string) => void }) => {
+const UserProfile = ({
+  children,
+  isLargeScreen,
+}: {
+  children: React.ReactNode;
+  isLargeScreen: boolean;
+}) => {
+  const { scrollToSection } = useScrollTo();
+
   return (
     <div className="min-h-screen flex items-center justify-center relative pt-16">
       <div className="container mx-auto px-6 text-center">
@@ -28,13 +37,13 @@ const UserProfile = ({ children, isLargeScreen, onScrollToSection }: { children:
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in-delay-3">
             <button
-              onClick={() => onScrollToSection("projects")}
+              onClick={() => scrollToSection("projects")}
               className="px-8 py-3 bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-full font-semibold hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1"
             >
               View My Work
             </button>
             <button
-              onClick={() => onScrollToSection("contact")}
+              onClick={() => scrollToSection("contact")}
               className="px-8 py-3 border-2 border-blue-500 text-blue-500 dark:text-white dark:border-white rounded-full font-semibold hover:bg-blue-500 hover:text-white dark:hover:bg-white dark:hover:text-gray-900 transition-all duration-300"
             >
               Get In Touch

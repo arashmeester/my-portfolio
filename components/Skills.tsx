@@ -2,17 +2,11 @@ import { skills } from "@/data/skills";
 import SkillBar from "@/components/Skillbar";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, Scrollbar, A11y } from "swiper/modules";
-import 'swiper/css';
-import 'swiper/css/pagination';
-import 'swiper/css/scrollbar';
+import "swiper/css";
+import "swiper/css/pagination";
+import "swiper/css/scrollbar";
 
-const Skills = ({
-  isLargeScreen,
-  onScrollToSection,
-}: {
-  isLargeScreen: boolean;
-  onScrollToSection: (sectionId: string) => void;
-}) => {
+const Skills = ({ isLargeScreen }: { isLargeScreen: boolean }) => {
   return (
     <div className="container mx-auto px-6">
       <div className={`max-w-4xl mx-auto ${isLargeScreen ? "max-w-6xl" : ""}`}>

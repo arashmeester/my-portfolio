@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import NavItem from "@/components/NavbarItem";
 import DarkModeToggle from "@/components/DarkModeToggle";
+import { useScrollContext } from "@/contexts/ScrollContext";
 import {
   Code,
   Home,
@@ -8,30 +9,15 @@ import {
   Briefcase,
   MessageCircle,
   Calendar,
-  Moon,
-  Sun,
   Menu,
   X,
 } from "lucide-react";
 
-const Navbar = ({
-  onScrollToSection,
-  activeSection
-}: {
-  onScrollToSection: (sectionId: string) => void;
-  activeSection: string
-}) => {
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-    };
-  }, []);
+const Navbar = ({ activeSection }: { activeSection: string }) => {
+  const { mobileMenuOpen, setMobileMenuOpen, isScrolled } = useScrollContext();
 
   const toggleMobileMenu = () => {
-    setMobileMenuOpen((prev) => !prev);
+    setMobileMenuOpen(!mobileMenuOpen);
   };
 
   return (
@@ -45,7 +31,7 @@ const Navbar = ({
       <div className="container mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
           <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent">
-            Welcome Fans !
+            Welcome !
           </h1>
 
           {/* Desktop Navigation */}
@@ -55,42 +41,36 @@ const Navbar = ({
               id="home"
               label="Home"
               icon={<Home size={18} />}
-              onScrollToSection={onScrollToSection}
             />
             <NavItem
               activeSection={activeSection}
               id="about"
               label="About"
               icon={<User size={18} />}
-              onScrollToSection={onScrollToSection}
             />
             <NavItem
               activeSection={activeSection}
               id="skills"
               label="Skills"
               icon={<Code size={18} />}
-              onScrollToSection={onScrollToSection}
             />
             <NavItem
               activeSection={activeSection}
               id="projects"
               label="Projects"
               icon={<Briefcase size={18} />}
-              onScrollToSection={onScrollToSection}
             />
             <NavItem
               activeSection={activeSection}
               id="experience"
               label="Experience"
               icon={<Calendar size={18} />}
-              onScrollToSection={onScrollToSection}
             />
             <NavItem
               activeSection={activeSection}
               id="contact"
               label="Contact"
               icon={<MessageCircle size={18} />}
-              onScrollToSection={onScrollToSection}
             />
             <DarkModeToggle />
           </div>
@@ -118,7 +98,6 @@ const Navbar = ({
               label="Home"
               icon={<User size={18} />}
               isMobile
-              onScrollToSection={onScrollToSection}
             />
             <NavItem
               activeSection={activeSection}
@@ -126,7 +105,6 @@ const Navbar = ({
               label="About"
               icon={<User size={18} />}
               isMobile
-              onScrollToSection={onScrollToSection}
             />
             <NavItem
               activeSection={activeSection}
@@ -134,7 +112,6 @@ const Navbar = ({
               label="Skills"
               icon={<Code size={18} />}
               isMobile
-              onScrollToSection={onScrollToSection}
             />
             <NavItem
               activeSection={activeSection}
@@ -142,7 +119,6 @@ const Navbar = ({
               label="Projects"
               icon={<Briefcase size={18} />}
               isMobile
-              onScrollToSection={onScrollToSection}
             />
             <NavItem
               activeSection={activeSection}
@@ -150,7 +126,6 @@ const Navbar = ({
               label="Experience"
               icon={<Calendar size={18} />}
               isMobile
-              onScrollToSection={onScrollToSection}
             />
             <NavItem
               activeSection={activeSection}
@@ -158,7 +133,6 @@ const Navbar = ({
               label="Contact"
               icon={<MessageCircle size={18} />}
               isMobile
-              onScrollToSection={onScrollToSection}
             />
           </div>
         </div>

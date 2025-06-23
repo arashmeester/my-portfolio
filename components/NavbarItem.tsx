@@ -1,23 +1,27 @@
 import React, { useContext } from "react";
+import { useScrollTo } from "@/hooks/useScrollTo";
 
 const NavItem = ({
   id,
   label,
   icon,
-  onScrollToSection,
   activeSection,
   isMobile = false,
 }: {
   id: string;
   label: string;
   icon: React.ReactNode;
-  activeSection: string,
-  onScrollToSection: (sectionId: string) => void;
+  activeSection: string;
   isMobile?: boolean;
 }) => {
+  const { scrollToSection } = useScrollTo();
+
+  console.log('activeSection', activeSection);
+  
+
   return (
     <button
-      onClick={() => onScrollToSection(id)}
+      onClick={() => scrollToSection(id)}
       className={`flex items-center gap-2 px-4 py-2 rounded-full transition-all duration-300 ${
         activeSection === id
           ? "bg-blue-500 text-white shadow-lg"
